@@ -48,7 +48,7 @@ public class Moving implements NavEventListener {
             System.exit(1);
         }
         float wheelDiameter = Float.parseFloat(pp.getProperty(PilotProps.KEY_WHEELDIAMETER, "56"));
-        float trackWidth = Float.parseFloat(pp.getProperty(PilotProps.KEY_TRACKWIDTH, "112"));
+        float trackWidth = Float.parseFloat(pp.getProperty(PilotProps.KEY_TRACKWIDTH, "160"));
         RegulatedMotor leftMotor = PilotProps.getMotor(pp.getProperty(PilotProps.KEY_LEFTMOTOR, "A"));
         RegulatedMotor rightMotor = PilotProps.getMotor(pp.getProperty(PilotProps.KEY_RIGHTMOTOR, "C"));
         boolean reverse = Boolean.parseBoolean(pp.getProperty(PilotProps.KEY_REVERSE, "false"));
@@ -71,12 +71,12 @@ public class Moving implements NavEventListener {
         detector.addListener(new FeatureListener() {
             @Override
             public void featureDetected(Feature feature, FeatureDetector detector) {
-                if (feature.getRangeReading().getRange() <= 16) {      //Nemusí přece hned zastavovat 
+                if (feature.getRangeReading().getRange() <= 20) {      //Nemusí přece hned zastavovat 
                     if (diffPilot.isMoving() && diffPilot.getMovement().getMoveType() != MoveType.ROTATE) {
                         diffPilot.stop();
                         if (navigator.isMoving()) {
                             System.out.println("EMERGENCY STOP");
-                            navigator.stop();
+                            navigator.clearPath();
                         }
                     }
                 }
@@ -98,6 +98,6 @@ public class Moving implements NavEventListener {
     }
 
     public void lol() {
-        System.out.println("JHGEUBUEUQEHUEB");
+        System.out.println("Waiting BT connection");
     }
 }
