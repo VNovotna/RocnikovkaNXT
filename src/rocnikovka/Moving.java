@@ -20,7 +20,7 @@ import lejos.util.PilotProps;
 public class Moving implements NavEventListener {
 
     public static final float MAX_DISTANCE = 50f;
-    public static final int DETECTOR_DELAY = 1000;
+    public static final int DETECTOR_DELAY = 500;
     private NXTNavigationModel model;
 
     public static void main(String[] args) throws Exception {
@@ -59,14 +59,14 @@ public class Moving implements NavEventListener {
 
         // Adding the navigator, adds the pilot and pose provider as well
         model.addNavigator(navigator);
-        
+
         System.out.println(model.hasMap());
         // Add the feature detector
         // Give it a pose provider, so that it records the pose when a feature was detected
         model.addFeatureDetector(detector);
         detector.enableDetection(true);
         detector.setPoseProvider(navigator.getPoseProvider());
-        navigator.getPoseProvider().getPose();
+
         // emergency stop when obstacle is near, pokud se netočí
         detector.addListener(new FeatureListener() {
             @Override
@@ -74,10 +74,9 @@ public class Moving implements NavEventListener {
                 if (feature.getRangeReading().getRange() <= 20) {      //Nemusí přece hned zastavovat 
                     if (diffPilot.isMoving() && diffPilot.getMovement().getMoveType() != MoveType.ROTATE) {
                         diffPilot.stop();
-                        if (navigator.isMoving()) {
-                            System.out.println("EMERGENCY STOP");
-                            navigator.clearPath();
-                        }
+                        System.out.println("EMERGENCY STOP");
+                        navigator.clearPath();
+
                     }
                 }
             }
