@@ -60,7 +60,6 @@ public class Moving implements NavEventListener {
         // Adding the navigator, adds the pilot and pose provider as well
         model.addNavigator(navigator);
 
-        System.out.println(model.hasMap());
         // Add the feature detector
         // Give it a pose provider, so that it records the pose when a feature was detected
         model.addFeatureDetector(detector);
@@ -73,9 +72,9 @@ public class Moving implements NavEventListener {
             public void featureDetected(Feature feature, FeatureDetector detector) {
                 if (feature.getRangeReading().getRange() <= 20) {      //Nemusí přece hned zastavovat 
                     if (diffPilot.isMoving() && diffPilot.getMovement().getMoveType() != MoveType.ROTATE) {
-                        diffPilot.stop();
-                        System.out.println("EMERGENCY STOP");
-                        navigator.clearPath();
+//                        diffPilot.stop();
+                        System.out.println("I SHOULD STOP");
+//                        navigator.clearPath();
 
                     }
                 }
@@ -86,7 +85,7 @@ public class Moving implements NavEventListener {
 
     @Override
     public void eventReceived(NavEvent navEvent) {
-        System.out.println("NAV EVENT");
+        //System.out.println("NAV EVENT");
         if (navEvent == NavEvent.WAYPOINT_REACHED) {
             System.out.println("WAYPOINT_REACHED");
         } else if (navEvent == NavEvent.CALCULATE_PATH) {
