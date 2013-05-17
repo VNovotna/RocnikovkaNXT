@@ -34,7 +34,7 @@ public class Moving implements NavEventListener {
         model.setSendMoveStart(true);
         model.setSendMoveStop(true);
         model.setAutoSendPose(true);
-        lol();
+        waitBT();
         Button.waitForAnyPress();
         model.shutDown();
     }
@@ -95,7 +95,7 @@ public class Moving implements NavEventListener {
         }
     }
 
-    public void lol() {
+    public void waitBT() {
         System.out.println("Waiting BT connection");
     }
 }
